@@ -1,59 +1,30 @@
 <template>
-  <main class="container" id="App">
-    <section class="row justify-content-center">
-      <div class="col-10">
-        <h1 class="text-center">XTK</h1>
-        <button class="btn btn-primary d-block mx-auto" @click="loginRedirect">
-          Login
-        </button>
-      </div>
-    </section>
-  </main>
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </div>
+  <router-view />
 </template>
 
-<script>
-import { defineComponent, onMounted } from "vue";
-import msal from "./plugins/msal";
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default defineComponent({
-  name: "App",
-  setup() {
-    const request = {
-      scopes: ["User.Read"],
-    };
+#nav {
+  padding: 30px;
+}
 
-    const handleLogin = async () => {
-      try {
-        const response = await msal.handleRedirectPromise();
-        if (!response) await msal.loginRedirect(request);
-        console.log("response", response);
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-        const silent = await silentLogin(response.account.username);
-        console.log("silentToken", silent);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const silentLogin = async (loginHint) => {
-      try {
-        return await msal.ssoSilent({ ...request, loginHint });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const loginRedirect = async () => {
-      await msal.loginRedirect(request);
-    };
-
-    onMounted(async () => {
-      await handleLogin();
-    });
-
-    return {
-      loginRedirect,
-    };
-  },
-});
-</script>
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>
