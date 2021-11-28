@@ -5,7 +5,7 @@ export const auth = async () => {
   const username = store.getters['user/username']
   const handle = await handleLogin()
 
-  //   if (userHasValidTokenInStore ~> validates ourself api token in api)
+  //   if (userHasValidTokenInStore) ~> validates ourself api token in api
   //     return true
 
   if (handle) {
@@ -18,6 +18,7 @@ export const auth = async () => {
   } else if (username) {
     const silent = await silentLogin(username)
     if (silent) {
+      console.log(silent)
       store.dispatch('user/setUsername', silent.account.username)
       store.dispatch('user/setToken', silent.accessToken)
       console.log(store.getters['user/username'])
