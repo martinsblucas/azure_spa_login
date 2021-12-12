@@ -82,6 +82,8 @@ export default {
         return
       }
 
+      dispatch("unsetUser")
+
       await loginRedirect()
     },
 
@@ -92,7 +94,7 @@ export default {
       commit('setUsername', username)
     },
 
-    logout({ commit }) {
+    unsetUser({ commit }) {
       commit('isAuthenticated', false)
       commit('setToken', null)
       commit('setExpiresOn', null)

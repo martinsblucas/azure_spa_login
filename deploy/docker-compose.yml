@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  xtk_front:
+  azure_spa_login:
     build:
       context: ../
-      dockerfile: ./deploy/xtk_front/Dockerfile
-    image: xtk_front:development
-    container_name: xtk_front
+      dockerfile: ./deploy/azure_spa_login/Dockerfile
+    image: azure_spa_login:development
+    container_name: azure_spa_login
     restart: always
     environment:
       - TZ=America/Sao_Paulo
@@ -15,13 +15,13 @@ services:
     ports:
       - ${APP_PORT}:8080
     env_file:
-      - ./xtk_front/.env
+      - ./azure_spa_login/.env
     volumes:
-      - ../xtk_front/:/usr/src/xtk_front
+      - ../azure_spa_login/:/usr/src/azure_spa_login
     networks:
-      - xtk_front_network
+      - azure_spa_login_network
 
 
 networks: 
-  xtk_front_network:
+  azure_spa_login_network:
     driver: bridge
